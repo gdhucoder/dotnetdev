@@ -1,0 +1,34 @@
+﻿DROP TABLE
+CREATE TABLE articles (
+      id INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
+      title VARCHAR(200),
+      body TEXT,
+      FULLTEXT (title,body) WITH PARSER ngram
+    ) ENGINE=InnoDB CHARACTER SET utf8mb4;
+SET NAMES utf8mb4;
+
+INSERT INTO articles (title,body) VALUES
+    ('数据库管理','在本教程中我将向你展示如何管理数据库'),
+    ('数据库应用开发','学习开发数据库应用程序');
+
+SET GLOBAL innodb_ft_aux_table="testdb/articles";
+
+SELECT * FROM INFORMATION_SCHEMA.INNODB_FT_INDEX_CACHE ORDER BY doc_id, position;
+
+
+SELECT * FROM INFORMATION_SCHEMA.INNODB_FT_DEFAULT_STOPWORD;
+
+CREATE TABLE my_stopwords(value VARCHAR(30)) ENGINE = INNODB;
+
+INSERT INTO my_stopwords(value) VALUES ('数据');
+
+SET GLOBAL innodb_ft_server_stopword_table = 'testdb/my_stopwords';
+
+ALTER TABLE articles ADD FULLTEXT INDEX ft_index (title,body) WITH PARSER ngram;
+
+
+ SELECT id, title, body, MATCH (title,body)  AGAINST ('数据库管理' IN BOOLEAN MODE)
+AS score FROM articles ORDER BY score DESC;
+
+SELECT * FROM articles WHERE MATCH (title,body)
+    AGAINST ('数据' IN BOOLEAN MODE);
