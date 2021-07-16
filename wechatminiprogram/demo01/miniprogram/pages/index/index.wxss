@@ -92,3 +92,29 @@ page {
   font-size: 24rpx;
   margin-top: 25%;
 }
+
+@font-face {
+  font-family: 'iconfont';  /* Project id 2677930 */
+  src: url('//at.alicdn.com/t/font_2677930_pinbi0ahkb.woff2?t=1626356986243') format('woff2'),
+       url('//at.alicdn.com/t/font_2677930_pinbi0ahkb.woff?t=1626356986243') format('woff'),
+       url('//at.alicdn.com/t/font_2677930_pinbi0ahkb.ttf?t=1626356986243') format('truetype');
+}
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-safty:before {
+  content: "\e98b";
+  color: darkgoldenrod;
+  font-size: 20px;
+}
+
+.icon-cloud:before {
+  content: "\e996";
+  color: rgb(11, 184, 132);
+  font-size: 20px;
+}

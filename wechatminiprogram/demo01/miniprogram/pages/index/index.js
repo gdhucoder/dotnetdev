@@ -57,6 +57,15 @@ Page({
         title: '部署服务',
         page: 'deployService'
       }]
+    },
+    {
+      title: '进度条',
+      tip: '进度条测试',
+      showItem: false,
+      item: [{
+        title: '进度条',
+        page: '2.2'
+      }]
     }],
     envList,
     selectedEnv: envList[0],
