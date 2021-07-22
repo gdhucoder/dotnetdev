@@ -20,4 +20,35 @@
   <view class="usermotto">
     <text class="user-motto">{{motto}}</text>
   </view>
+  <!-- 使用模板 -->
+  <import src="../template/item.wxml"/>
+  <template is="item" data="{{text: '测试引用外部模板'}}"/>
+
+    <template name="msgItem">
+      <view>
+        <text> {{index}}: {{msg}} </text>
+        <text> Time: {{time}} </text>
+      </view>
+    </template>
+
+
+<template is="msgItem" data="{{...item}}"/>
+
+  <text>hello</text>
+  <!--
+    {
+      time: (new Date()).toString()
+    }
+  -->
+  <text>当前时间为：{{time}}</text>
+  <view wx:for="{{array}}">
+    {{index}} : {{item.message}}
+  </view>
+  <switch wx:for="{{objectArray}}" wx:key="unique" > {{item.id}} </switch>
+<button bindtap="switch"> Switch </button>
+<button bindtap="addToFront"> Add to the front </button>
+
+
+<switch wx:for="{{numberArray}}" wx:key="*this" > {{item}} </switch>
+<button bindtap="addNumberToFront"> Add Number to the front </button>
 </view>
