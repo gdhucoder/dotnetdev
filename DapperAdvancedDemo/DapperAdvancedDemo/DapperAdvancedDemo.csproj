@@ -16,7 +16,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="lib\" />
     <Folder Include="Tools\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="DmProvider">
+      <HintPath>lib\DmProvider.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
+using Dm;
 
 namespace DapperAdvancedDemo.Service
 {
@@ -34,6 +35,26 @@ namespace DapperAdvancedDemo.Service
                     Console.WriteLine($"{ user.UserName }");
                 }
             }
+            return result;
+        }
+
+        public PagedResults<User> FindCountsDamenDB()
+        {
+            var result = new PagedResults<User>();
+
+            try
+            {
+                IDbConnection cnn = new DmConnection("server=localhost;port=5236;user=SYSDBA;password=SYSDBA");
+                string sql = "select Name from \"TestDB\".\"UserDB\";";
+                var name = cnn.QueryFirst<string>(sql);
+                Console.WriteLine($"{ name }");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"{ e.Message }");
+                throw;
+            }
+
             return result;
         }
     }

@@ -45,7 +45,7 @@ namespace DapperAdvancedDemo.Controllers
         [HttpGet]
         public PagedResults<User> GetAll([FromServices] UserService userService)
         {
-            return userService.FindAllUsers();
+            return userService.FindCountsDamenDB();
         }
     }
 }

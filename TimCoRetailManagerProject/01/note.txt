@@ -1,0 +1,19 @@
+# 01 Course Introduction
+
+model how an papplication grows over time
+create a platform that needs to be upgraded to newer technologies
+create a platform to demonstrate how to incorporate new tech into existing software
+real job
+
+Situation Setup
+
+Retail Management 
+Ove time, get new requirements
+
+Inital Project
+desktop app
+WebAPI layer
+
+what if I don't want to learn X technology (WPF, MVC, SSDT, etc.)?
+
+not limit youself to a certain tech
