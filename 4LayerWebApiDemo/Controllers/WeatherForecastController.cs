@@ -1,13 +1,13 @@
-﻿using DapperAdvancedDemo.Model;
-using DapperAdvancedDemo.Service;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using NLayerWebApiDemo.Model;
+using NLayerWebApiDemo.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DapperAdvancedDemo.Controllers
+namespace NLayerWebApiDemo.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
@@ -20,15 +20,15 @@ namespace DapperAdvancedDemo.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        private readonly ICatService _catService;
+
+        public WeatherForecastController(ILogger<WeatherForecastController> logger,
+                        ICatService catService)
         {
             _logger = logger;
+            _catService = catService;
         }
 
-        /// <summary>
-        /// Get
-        /// </summary>
-        /// <returns></returns>
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
@@ -42,10 +42,12 @@ namespace DapperAdvancedDemo.Controllers
             .ToArray();
         }
 
-        [HttpGet]
-        public PagedResults<User> GetAll([FromServices] UserService userService)
+
+        [HttpPost]
+        public Cat Add(Cat input)
         {
-            return userService.FindAllUsers();
+            _catService.Add(input);
+            return input;
         }
     }
 }
