@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Dapper;
+using Dapper.Contrib.Extensions;
+using System;
 
 namespace NLayerWebApiDemo.Model
 {
-    public class Cat
+    [Table("Cats")]
+    public class Cats
     {
 
         public int id { get; set; }

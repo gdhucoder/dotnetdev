@@ -8,7 +8,8 @@ namespace NLayerWebApiDemo.Service
 {
     public interface ICatService
     {
-        void Add(Cat entiry);
-        Cat Find(int id);
+        void Add(Cats entiry);
+        Cats Find(int id);
+        void TestDM();
     }
 }

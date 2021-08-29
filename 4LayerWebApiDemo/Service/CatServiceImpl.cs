@@ -9,29 +9,26 @@ namespace NLayerWebApiDemo.Service
 {
     public class CatServiceImpl : ICatService
     {
-
-        public CatServiceImpl()
+        private readonly IUnitOfWork _uow;
+        public CatServiceImpl(IUnitOfWork uow)
         {
-
+            _uow = uow;
         }
 
-        public void Add(Cat entity)
+        public void Add(Cats entity)
         {
-            using (var uow = new UnitOfWork("Server=localhost;Port=5004;Uid=root;Password=password;Database=testdb"))
-            {
-                uow.CatRepository.Add(entity);
-                uow.Commit();
-            }
+            _uow.CatRepository.Add(entity);
+            _uow.Commit();
         }
 
-        public Cat Find(int id)
+        public Cats Find(int id)
         {
-            Cat res = null;
-            using (var uow = new UnitOfWork(""))
-            {
-                res = uow.CatRepository.Find(id);
-            }
-            return res;
+            return _uow.CatRepository.Find(id); ;
+        }
+
+        public void TestDM()
+        {
+            _uow.CatRepository.TestDMDataBase();
         }
     }
 }

@@ -8,26 +8,26 @@ using Dapper;
 
 namespace NLayerWebApiDemo.Repository
 {
-    internal class CatRepository : RepositoryBase, ICatRepository
+    internal class DogRepository : RepositoryBase, IDogRepository
     {
-        public CatRepository(IDbTransaction transaction)
+        public DogRepository(IDbTransaction transaction)
             :base(transaction)
         {
 
         }
 
-        public void Add(Cat entity)
+        public void Add(Cats entity)
         {
             entity.id = Connection.ExecuteScalar<int>(
-                "insert into Cats (Name, Birthday) value (@Name, now());SELECT LAST_INSERT_ID();",
+                "insert into Dogs (Name, Birthday) value (@Name, now());SELECT LAST_INSERT_ID();",
                 param: new {Name = entity.Name },
                 transaction: Transaction);
         }
 
-        public Cat Find(int id)
+        public Cats Find(int id)
         {
-            return Connection.QueryFirstOrDefault<Cat>(
-                "select * from Cats",
+            return Connection.QueryFirstOrDefault<Cats>(
+                "select * from Dogs where id=@Id",
                 param: new { Id = id},
                 transaction:Transaction);
         }

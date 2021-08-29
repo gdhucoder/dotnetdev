@@ -12,12 +12,13 @@ namespace NLayerWebApiDemo.Repository
         private IDbConnection _connection;
         private IDbTransaction _transaction;
         private ICatRepository _catRepository;
+        private IDogRepository _dogRepository;
         private bool _disposed;
 
-        public UnitOfWork(string connectionString)
+        public UnitOfWork(IDbConnectionFactory factory)
         {
             // Server=127.0.0.1;Port=5004;Uid=root;Password=password;Database=testdb
-            _connection = new MySqlConnection(connectionString);
+            _connection = factory.CreateConnection();
             _connection.Open();
             _transaction = _connection.BeginTransaction();
         }
@@ -25,6 +26,12 @@ namespace NLayerWebApiDemo.Repository
         public ICatRepository CatRepository
         {
             get { return _catRepository ?? (_catRepository = new CatRepository(_transaction)); }
+        }
+
+
+        public IDogRepository DogRepository
+        {
+            get { return _dogRepository ?? (_dogRepository = new DogRepository(_transaction)); }
         }
 
         public void Commit()

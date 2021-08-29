@@ -44,10 +44,23 @@ namespace NLayerWebApiDemo.Controllers
 
 
         [HttpPost]
-        public Cat Add(Cat input)
+        public Cats Add(Cats input)
         {
             _catService.Add(input);
             return input;
+        }
+
+        [HttpPost]
+        public Cats Find(Cats input)
+        {
+            return _catService.Find(input.id); ;
+        }
+
+
+        [HttpGet]
+        public void TestDM()
+        {
+            _catService.TestDM();
         }
     }
 }

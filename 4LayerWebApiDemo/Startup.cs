@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using NLayerWebApiDemo.Repository;
 using NLayerWebApiDemo.Service;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,13 @@ namespace NLayerWebApiDemo
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "_4LayerWebApiDemo", Version = "v1" });
             });
+            // the same each request
             services.AddScoped<ICatService, CatServiceImpl>();
+            // always different AddTransient
+            services.AddScoped<IDbConnectionFactory, DamengConnectionFacory>();
+            // 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

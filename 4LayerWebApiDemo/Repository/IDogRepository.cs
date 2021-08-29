@@ -2,10 +2,9 @@
 
 namespace NLayerWebApiDemo.Repository
 {
-    public interface ICatRepository
+    public interface IDogRepository
     {
         void Add(Cats entity);
         Cats Find(int id);
-        void TestDMDataBase();
     }
 }
