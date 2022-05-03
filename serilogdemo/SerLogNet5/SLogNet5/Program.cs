@@ -49,12 +49,12 @@ namespace SLogNet5
                 .Enrich.WithMachineName()
                 .WriteTo.Console()
                 .WriteTo.Debug()
-                .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(configuration["ElasticSearch:Uri"]))
-                {
-                    AutoRegisterTemplate = true,
-                    AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv6,
-                    IndexFormat = $"{Assembly.GetExecutingAssembly().GetName().Name!.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}"
-                })
+                //.WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(configuration["ElasticSearch:Uri"]))
+                //{
+                //    AutoRegisterTemplate = true,
+                //    AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv6,
+                //    IndexFormat = $"{Assembly.GetExecutingAssembly().GetName().Name!.ToLower().Replace(".", "-")}-{environment?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}"
+                //})
                 .ReadFrom.Configuration(configuration)
                 .CreateLogger();
         }
