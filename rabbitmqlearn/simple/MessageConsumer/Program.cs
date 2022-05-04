@@ -1,5 +1,6 @@
 using MassTransit;
 using MessageConsumer;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,26 +9,38 @@ builder.Services.AddMassTransit(x =>
 {
     x.AddConsumer<PageVisitConsumer>();
     x.AddConsumer<RedisSyncConsumer>();
-    x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cur =>
+    x.UsingRabbitMq((ctx, cfg) =>
     {
-        cur.Host(new Uri("rabbitmq://localhost:8672"), h =>
+        cfg.Host(new Uri("rabbitmq://localhost:8672"), h =>
         {
             h.Username("guest");
             h.Password("guest");
         });
-        cur.ReceiveEndpoint("newsqueue", oq =>
-        {
-            oq.PrefetchCount = 20;
-            oq.UseMessageRetry(r => r.Interval(2, 100));
-            oq.ConfigureConsumer<PageVisitConsumer>(provider);
-        });
-        cur.ReceiveEndpoint("redissync", oq =>
-        {
-            oq.PrefetchCount = 20;
-            oq.UseMessageRetry(r => r.Interval(2, 100));
-            oq.ConfigureConsumer<RedisSyncConsumer>(provider);
-        });
-    }));
+        cfg.ConfigureEndpoints(ctx, new KebabCaseEndpointNameFormatter("gdhu", true));
+        // cfg.ConfigureEndpoints(ctx);
+
+    });
+    //x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cur =>
+    //{
+    //    cur.Host(new Uri("rabbitmq://localhost:8672"), h =>
+    //    {
+    //        h.Username("guest");
+    //        h.Password("guest");
+    //    });
+    //    cfg.ConfigureEndpoints(ctx, new KebabCaseEndpointNameFormatter("ttt", true));
+    //    //cur.ReceiveEndpoint("newsqueue", oq =>
+    //    //{
+    //    //    oq.PrefetchCount = 6;
+    //    //    oq.UseMessageRetry(r => r.Interval(2, 100));
+    //    //    oq.ConfigureConsumer<PageVisitConsumer>(provider);
+    //    //});
+    //    //cur.ReceiveEndpoint("redissync", oq =>
+    //    //{
+    //    //    oq.PrefetchCount = 6;
+    //    //    oq.UseMessageRetry(r => r.Interval(2, 100));
+    //    //    oq.ConfigureConsumer<RedisSyncConsumer>(provider);
+    //    //});
+    //}));
 });
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

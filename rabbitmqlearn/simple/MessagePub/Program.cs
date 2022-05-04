@@ -6,14 +6,26 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMassTransit(x =>
 {
-    x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
+    x.UsingRabbitMq((ctx, cfg) =>
     {
-        config.Host(new Uri("rabbitmq://localhost:8672"), h =>
+        cfg.Host(new Uri("rabbitmq://localhost:8672"), h =>
         {
             h.Username("guest");
             h.Password("guest");
+            h.PublisherConfirmation = false;
         });
-    }));
+        cfg.ConfigureEndpoints(ctx, new KebabCaseEndpointNameFormatter("gdhu", true));
+        // cfg.ConfigureEndpoints(ctx);
+
+    });
+    //x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(config =>
+    //{
+    //    config.Host(new Uri("rabbitmq://localhost:8672"), h =>
+    //    {
+    //        h.Username("guest");
+    //        h.Password("guest");
+    //    });
+    //}));
 });
 // builder.Services.AddMassTransitHostedService();
 builder.Services.AddControllers();

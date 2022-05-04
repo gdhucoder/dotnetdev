@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "MessagePub": {
+    "MessagePubisher": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
