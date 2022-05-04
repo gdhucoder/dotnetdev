@@ -2,6 +2,7 @@
 {
     public class RedisSyncMsg
     {
-        public string content { get; set; }
+        public string type { get; set; }
+        public string baseId { get; set; }
     }
 }
