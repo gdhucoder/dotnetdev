@@ -13,8 +13,8 @@ builder.Services.AddMassTransit(x =>
     {
         cfg.Host(new Uri("rabbitmq://localhost:8672"), h =>
         {
-            h.Username("guest");
-            h.Password("guest");
+            h.Username("webapp");
+            h.Password("123456");
         });
         cfg.ConfigureEndpoints(ctx, new KebabCaseEndpointNameFormatter("gdhu", true));
         // cfg.ConfigureEndpoints(ctx);
