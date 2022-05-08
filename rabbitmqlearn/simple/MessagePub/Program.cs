@@ -33,8 +33,8 @@ builder.Services.AddMassTransit(x =>
 
 
 var bulk = Policy.BulkheadAsync<HttpResponseMessage>(
-    maxParallelization:5,
-    maxQueuingActions:1,
+    maxParallelization: 1,
+    maxQueuingActions: 0,
     onBulkheadRejectedAsync: context => Task.CompletedTask
     );
 var message = new HttpResponseMessage()
@@ -46,7 +46,6 @@ var fallback = Policy<HttpResponseMessage>.Handle<BulkheadRejectedException>().F
 var fallbackbulk = Policy.WrapAsync(fallback, bulk);
 
 builder.Services.AddHttpClient("httpv4").AddPolicyHandler(fallbackbulk);
-
 // builder.Services.AddMassTransitHostedService();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
