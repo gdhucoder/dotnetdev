@@ -1,4 +1,6 @@
 using MassTransit;
+using Polly;
+using Polly.Bulkhead;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,24 @@ builder.Services.AddMassTransit(x =>
     //    });
     //}));
 });
+
+
+
+var bulk = Policy.BulkheadAsync<HttpResponseMessage>(
+    maxParallelization:5,
+    maxQueuingActions:1,
+    onBulkheadRejectedAsync: context => Task.CompletedTask
+    );
+var message = new HttpResponseMessage()
+{
+    Content = new StringContent("{}"),
+};
+
+var fallback = Policy<HttpResponseMessage>.Handle<BulkheadRejectedException>().FallbackAsync(message);
+var fallbackbulk = Policy.WrapAsync(fallback, bulk);
+
+builder.Services.AddHttpClient("httpv4").AddPolicyHandler(fallbackbulk);
+
 // builder.Services.AddMassTransitHostedService();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
