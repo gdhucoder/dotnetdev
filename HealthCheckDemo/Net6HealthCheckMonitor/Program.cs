@@ -18,6 +18,14 @@ builder.Services.AddHealthChecks()
     ;
 ;
 
+/// <summary>
+/// partation
+/// ´ÅÅÌ
+/// https://github.com/dotnet/runtime/issues/26081·ÖÇø
+/// </summary>
+var free = new DriveInfo("D:\\myarticles\\myknowledgebase").AvailableFreeSpace;
+Console.WriteLine(free/1024/1024);
+
 builder.Services.AddHealthChecksUI().AddInMemoryStorage();
 
 builder.Services.AddControllers();
